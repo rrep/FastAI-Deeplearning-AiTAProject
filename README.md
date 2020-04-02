@@ -3,7 +3,7 @@
 *The application that will finally put an end to moral philosophy.*
 ******************************************************************
 
-Just kidding, it's a text classification application using FastAI, trained on a database of all reddit "Am I The ***hole" posts. 
+Just kidding, it's a text classification application using FastAI, trained on a database of all reddit "Am I The ***hole" posts. This is based on the same principles that are used for some sentiment analysis applications.
 
 This is a deep learning project that trains and deploys a neural net using every "Am I the ***hole" post and its verdict from Reddit.
 
