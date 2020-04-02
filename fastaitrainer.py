@@ -52,7 +52,7 @@ learn.fit_one_cycle(1, 1e-3)
 learn.save_encoder('ft_enc')
 
 #CREATE ACTUAL CLASSIFIER
-learn = text_classifier_learner(data_clas, AWD_LSTM, drop_mult=0.5)
+learn = text_classifier_learner(data, AWD_LSTM, drop_mult=0.5)
 learn.load_encoder('ft_enc')
 
 #Train and Tune Dawg
