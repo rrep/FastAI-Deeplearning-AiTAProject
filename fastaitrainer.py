@@ -14,15 +14,15 @@ df.dropna(subset = ["verdict"], inplace=True)
 #create data bunch for LM
 bs=48
 data_lm = (TextList.from_df(df,path, cols=3)
-            #split 10% out for validation data
-            .split_by_rand_pct(0.1)
+            #split 20% out for validation data
+            .split_by_rand_pct(0.2)
            #language model not classifier
             .label_for_lm()           
             .databunch(bs=bs))
 
 #create databunch for classifier
-data = (TextList.from_df(df,path, cols=3, vocab=data_lm.vocab)
-            .split_subsets(train_size=0.8, valid_size=0.2)  
+data_clas = (TextList.from_df(df,path, cols=3, vocab=data_lm.vocab)
+            .split_by_rand_pct(0.2)  
             #refer to label 'verdict'
             .label_from_df(cols=5) 
             #turn into databunch
@@ -34,8 +34,8 @@ data = (TextList.from_df(df,path, cols=3, vocab=data_lm.vocab)
 #data.save('data_clas_export.pkl')
 
 #TRAIN BASE LANGUAGE MODEL
-#create a learner - uses transfer learning from pre-trained AWD_LSTM
-learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.5)
+#create a learner - uses transfer learning from pre-trained Wikitext103
+learn = language_model_learner(data_lm, pretrained_model=AWD_LSTM, drop_mult=0.5)
 
 #train one cycle to on all the data
 learn.fit_one_cycle(1, 1e-2)
@@ -51,7 +51,7 @@ learn.fit_one_cycle(1, 1e-3)
 learn.save_encoder('ft_enc')
 
 #TRAIN ACTUAL CLASSIFIER
-learn = text_classifier_learner(data, AWD_LSTM, drop_mult=0.5)
+learn = text_classifier_learner(data_clas, drop_mult=0.5)
 learn.load_encoder('ft_enc')
 
 #Train and Tune Dawg
@@ -70,3 +70,4 @@ learn.fit_one_cycle(1, slice(2e-3/100, 2e-3))
 
 #release the trained model to judge the masses
 learn.export()
+
