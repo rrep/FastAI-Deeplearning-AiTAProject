@@ -5,7 +5,7 @@
 
 Just kidding, it's a text classification application using FastAI, trained on a database of all reddit "Am I The ***hole" posts. 
 
-This is a deep learning project that trains and deploys a neural net using every "Am I the ***hole" and its verdict from Reddit.
+This is a deep learning project that trains and deploys a neural net using every "Am I the ***hole" post and its verdict from Reddit.
 
 I originally pulled the data set from this article:
 
