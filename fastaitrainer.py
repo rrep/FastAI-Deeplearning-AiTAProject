@@ -34,8 +34,8 @@ data_clas = (TextList.from_df(df,path, cols=3, vocab=data_lm.vocab)
 #data.save('data_clas_export.pkl')
 
 #TRAIN BASE LANGUAGE MODEL
-#create a learner - uses transfer learning from pre-trained Wikitext103
-learn = language_model_learner(data_lm, pretrained_model=AWD_LSTM, drop_mult=0.5)
+#create a learner - uses transfer learning from pre-trained AWD_LSTM model
+learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.5)
 
 #train one cycle to on all the data
 learn.fit_one_cycle(1, 1e-2)
