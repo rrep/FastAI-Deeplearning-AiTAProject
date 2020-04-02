@@ -56,10 +56,12 @@ learn.load_encoder('ft_enc')
 
 #Train and Tune Dawg
 learn.fit_one_cycle(1, 1e-2)
+learn.export('classifier-first')
 
 #freeze all but the last 2 weight matrices
 learn.freeze_to(-2)
 learn.fit_one_cycle(1, slice(5e-3/2., 5e-3))
+learn.export('classifier-second')
 
 #do em all for one last pass
 learn.unfreeze()
@@ -69,5 +71,4 @@ learn.fit_one_cycle(1, slice(2e-3/100, 2e-3))
 #learn.predict("I accidently stepped on a child when I was walking to the store.")
 
 #release the trained model to judge the masses
-learn.export()
-
+learn.export('classifier-final')
