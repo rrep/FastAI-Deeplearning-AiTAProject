@@ -7,18 +7,9 @@ path = Path('.')
 df = pd.read_csv(path/'aita_clean.csv')
 df.head()
 
-
 #clean DF
 df.dropna(subset = ["body"], inplace=True)
 df.dropna(subset = ["verdict"], inplace=True)
-
-#create databunch for classifier
-data = (TextList.from_df(df,path, cols=3)
-            .split_subsets(train_size=0.8, valid_size=0.2)  
-            #refer to label 'verdict'
-            .label_from_df(cols=5) 
-            #turn into databunch
-            .databunch())
 
 #create data bunch for LM
 bs=48
@@ -29,12 +20,20 @@ data_lm = (TextList.from_df(df,path, cols=3)
             .label_for_lm()           
             .databunch(bs=bs))
 
+#create databunch for classifier
+data = (TextList.from_df(df,path, cols=3, vocab=data_lm.vocab)
+            .split_subsets(train_size=0.8, valid_size=0.2)  
+            #refer to label 'verdict'
+            .label_from_df(cols=5) 
+            #turn into databunch
+            .databunch())
+
 
 #optionally save the model data
 #data_lm.save('data_lm_export.pkl')
 #data.save('data_clas_export.pkl')
 
-#CREATE BASE LANGUAGE MODEL
+#TRAIN BASE LANGUAGE MODEL
 #create a learner - uses transfer learning from pre-trained AWD_LSTM
 learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.5)
 
@@ -51,7 +50,7 @@ learn.fit_one_cycle(1, 1e-3)
 #save the trained LM 
 learn.save_encoder('ft_enc')
 
-#CREATE ACTUAL CLASSIFIER
+#TRAIN ACTUAL CLASSIFIER
 learn = text_classifier_learner(data, AWD_LSTM, drop_mult=0.5)
 learn.load_encoder('ft_enc')
 
