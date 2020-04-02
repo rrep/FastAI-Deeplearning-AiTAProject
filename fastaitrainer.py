@@ -36,7 +36,7 @@ data_lm = (TextList.from_df(df,path, cols=3)
 #data.save('data_clas_export.pkl')
 
 #CREATE BASE LANGUAGE MODEL
-#create a learner - uses transfer learning from pre-trained wikitext 103 (AWD_LSTM)
+#create a learner - uses transfer learning from pre-trained AWD_LSTM
 learn = language_model_learner(data_lm, AWD_LSTM, drop_mult=0.5)
 
 #train one cycle to on all the data
@@ -47,12 +47,12 @@ learn.unfreeze()
 learn.fit_one_cycle(1, 1e-3)
 
 #optionally test where we're at with the language model through a predictive exercise
-# learn.predict("This is a review about", n_words=10)
+# learn.predict("I had a big fight with my ", n_words=20)
 
 #save the trained LM 
 learn.save_encoder('ft_enc')
 
-#BUILD CLASSIFIER
+#CREATE ACTUAL CLASSIFIER
 learn = text_classifier_learner(data_clas, AWD_LSTM, drop_mult=0.5)
 learn.load_encoder('ft_enc')
 
