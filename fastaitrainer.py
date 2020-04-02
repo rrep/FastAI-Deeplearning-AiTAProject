@@ -23,11 +23,10 @@ data = (TextList.from_df(df,path, cols=3)
 #create data bunch for LM
 bs=48
 data_lm = (TextList.from_df(df,path, cols=3)
-           #Inputs: all the text files in path
+            #split 10% out for validation data
             .split_by_rand_pct(0.1)
-           #We randomly split and keep 10% (10,000 reviews) for validation
+           #language model not classifier
             .label_for_lm()           
-           #We want to do a language model so we label accordingly
             .databunch(bs=bs))
 
 
