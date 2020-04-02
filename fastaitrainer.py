@@ -58,7 +58,7 @@ learn.load_encoder('ft_enc')
 #Train and Tune Dawg
 learn.fit_one_cycle(1, 1e-2)
 
-#unfreeze only the last 2 weight matrices
+#freeze all but the last 2 weight matrices
 learn.freeze_to(-2)
 learn.fit_one_cycle(1, slice(5e-3/2., 5e-3))
 
