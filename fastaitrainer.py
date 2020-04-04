@@ -65,7 +65,7 @@ learn.export('classifier-second')
 
 #do em all for one last pass
 learn.unfreeze()
-learn.fit_one_cycle(1, slice(2e-3/100, 2e-3))
+learn.fit_one_cycle(1, slice(2e-3/100., 2e-3))
 
 # optionally see if the computer thinks you're an a-hole
 #learn.predict("I accidently stepped on a child when I was walking to the store.")

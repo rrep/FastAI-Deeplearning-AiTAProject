@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <title>Ethica</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <div id="title" >Ethica</div>
+            <img id="philosophers" src="trainingscreenshot.png">
+            <section id="content">
+                <div id="submission">
+                    <textarea id="enter-text" class="form-control-lg" placeholder="Enter your action.."></textarea>
+                    <button type="button" id="submit-button" class="btn btn-outline-success">Judge Me</button>
+                </div>
+                <div id="response" class="">
+                    <div class="row">
+                        <div id="results-header" class="col align-self-start">Thus Spoke The Machine...</div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div id="results" class="col-4">Verdict: Asshole.</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </body>
+    <link href="https://fonts.googleapis.com/css2?family=Qwigley&display=swap" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <style>
+        #title{
+            margin-top:10px;
+            margin-bottom: 20px;
+            width:100%;
+            height: 50px;
+            font-family: 'Qwigley', cursive;
+            font-size: 96px;
+            text-align:center;
+        }
+        #results-header{
+            font-family: 'Qwigley', cursive;
+            font-size: 48px;
+            display:none;
+        }
+        #results {
+            font-size: 24px;
+            display:none;
+        }
+        #philosophers{
+            padding-top: 20px; 
+            max-width:100%
+        }
+        #enter-text{
+            width:100%;
+            height:25%;
+            margin-bottom: 5px
+        }
+        #submit-button{
+            text-align: right;
+        }
+        #loading, #submit-button{
+            display: block;
+            margin:auto;
+        }
+        .hidden {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        const button = document.getElementById("submit-button");
+        const submission = document.getElementById("submission");
+        const loading = document.getElementById("loading");
+        const response = document.getElementById("response");
+        const resultsHeader = document.getElementById("results-header");
+        const results = document.getElementById("results");
+
+        button.addEventListener('click', (evt) => {
+            evt.preventDefault();
+            userInput = document.getElementById("enter-text").value;
+            data = {"text":userInput};
+            url = "http://199.116.235.200/judgeme/";
+            $(submission).fadeOut();
+            console.log(userInput);
+            //post request 
+            $.post(url, data, function(result){
+                results.innerText = result;
+            });
+            setTimeout(()=>{ 
+                $(resultsHeader).fadeIn(2000); 
+                setTimeout(()=>{ 
+                    $(results).fadeIn(2500); 
+                }, 3000);
+            }, 500);
+            
+            
+            })
+    </script>
+</html>
