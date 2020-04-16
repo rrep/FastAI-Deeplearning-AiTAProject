@@ -14,7 +14,7 @@ After that is complete, we then train again with our labels so we can have a cla
 Data set from this article:
 https://dvc.org/blog/a-public-reddit-dataset
 
-And used the Fast.ai library, which is a simplified overlay of Pytorch, Pandas, Numpy, SKLearn and other packages.
+And used the Fast.ai library, which is a simplified overlay of Pytorch, Pandas, Numpy, and other packages.
 
 The Fast.ai quickstart guide can be found here. https://docs.fast.ai/text.html
 They also offer a MOOC! And it is awesome.
